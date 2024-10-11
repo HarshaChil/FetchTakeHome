@@ -13,19 +13,23 @@ struct Item : Codable, Identifiable{
     let name: String?
 }
 
-struct Data{
-    var items: [Item] = []
-    init() {
+class Data : ObservableObject{
+    @Published var items: [Item] = []
+    
+    func fetchData() {
         var validItems : [Item] = []
         guard let url = URL(string: "https://fetch-hiring.s3.amazonaws.com/hiring.json") else{ return }
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
-            guard error != nil else { return }
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) {
+            data, response, error in
+            guard error == nil else { return }
             guard data != nil else { return }
             let items = try? JSONDecoder().decode([Item].self, from: data!)
             validItems = items?.filter { $0.name != nil && !$0.name!.isEmpty } ?? []
-        }
-        self.items = validItems
-        task.resume()
+            validItems = validItems.sorted{($0.listId, $0.name!) < (($1.listId, $1.name!))}
+            DispatchQueue.main.async {
+                self.items = validItems
+            }
+        }.resume()
     }
 }
 

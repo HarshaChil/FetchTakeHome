@@ -8,16 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    let items = Data()
+    @ObservedObject var items = Data()
     var body: some View {
         NavigationView {
             List {
                 ForEach(items.items) { item in
-                    Text("\(item.id), \(item.listId), \(item.name!)")
+                    Text("List Id: \(item.listId), Name: \(item.name!), Id: \(item.id)")
                 }
             }
         }
         .navigationTitle("Items List")
+        .onAppear{
+            items.fetchData()
+        }
     }
 }
 
