@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Item : Codable{
+struct Item : Codable, Identifiable{
     let id: Int
     let listId: Int
     let name: String?

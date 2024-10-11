@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    let items = Data()
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            List {
+                ForEach(items.items) { item in
+                    Text(item.id + "," + item.listId + "," + item.name! )
+                }
+            }
         }
-        .padding()
+        .navigationTitle("Items List")
     }
 }
 
