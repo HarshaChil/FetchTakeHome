@@ -13,7 +13,7 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(items.items) { item in
-                    Text(item.id + "," + item.listId + "," + item.name! )
+                    Text("\(item.id), \(item.listId), \(item.name!)")
                 }
             }
         }
