@@ -13,15 +13,15 @@ struct Item : Codable{
     let name: String?
 }
 
-struct Data {
+struct Data{
     var items: [Item] = []
-    mutating func getData() {
+    init() {
         var validItems : [Item] = []
         guard let url = URL(string: "https://fetch-hiring.s3.amazonaws.com/hiring.json") else{ return }
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
-            guard let error else { return }
-            guard let data else { return }
-            let items = try? JSONDecoder().decode([Item].self, from: data)
+            guard error != nil else { return }
+            guard data != nil else { return }
+            let items = try? JSONDecoder().decode([Item].self, from: data!)
             validItems = items?.filter { $0.name != nil && !$0.name!.isEmpty } ?? []
         }
         self.items = validItems
