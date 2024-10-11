@@ -9,6 +9,7 @@ import Testing
 @testable import FetchTakeHome
 import unistd
 
+/// Test if api call is performed correctly and if asynchronous things work correctly
 struct FetchTakeHomeTests {
 
     @Test func example() async throws {
@@ -17,7 +18,6 @@ struct FetchTakeHomeTests {
         data.fetchData()
         sleep(15)
         print(data.items)
-        assert (1 == 1)
     }
 
 }

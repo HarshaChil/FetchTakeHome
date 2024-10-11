@@ -7,15 +7,20 @@
 
 import SwiftUI
 
+/// Struct to represent single unit of data from api
 struct Item : Codable, Identifiable{
     let id: Int
     let listId: Int
     let name: String?
 }
 
+/// Class that represents full list of data received from api call
 class Data : ObservableObject{
+    
+    /// List of items received from api call, updated every time data is fetched
     @Published var items: [Item] = []
     
+    /// Performs api call to update/init the list of items/data
     func fetchData() {
         var validItems : [Item] = []
         guard let url = URL(string: "https://fetch-hiring.s3.amazonaws.com/hiring.json") else{ return }
@@ -33,6 +38,7 @@ class Data : ObservableObject{
     }
 }
 
+/// Displays main view of app
 @main
 struct FetchTakeHomeApp: App {
     var body: some Scene {

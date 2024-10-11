@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Single view of app
 struct ContentView: View {
     @ObservedObject var items = Data()
     var body: some View {
